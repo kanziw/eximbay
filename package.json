@@ -1,0 +1,26 @@
+{
+  "name": "eximbay",
+  "version": "0.1.0",
+  "description": "eximbay module for Node.js",
+  "main": "./dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kanziw/eximbay.git"
+  },
+  "keywords": [
+    "eximbay"
+  ],
+  "author": {
+    "name": "kanziw",
+    "email": "kanziwoong@gmail.com",
+    "url": "https://kanziw.github.io"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kanziw/eximbay/issues"
+  },
+  "homepage": "https://github.com/kanziw/eximbay#readme"
+}
