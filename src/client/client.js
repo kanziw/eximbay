@@ -1,3 +1,18 @@
+const paymentTmpl = curry2((url, data) => `
+    <div align="center">
+      <form method="post" action="${url}">
+        <input type="submit">
+        ${Object.entries(data).map(([ key, value ]) => `<input type="hidden" name="${key}" value="${value}" >`).join('\n')}
+      </form>
+    </div>
+    `)
+
+const sortByKeys = data => {
+  const newData = {}
+  Object.keys(data).sort().forEach(key => newData[ key ] = data[ key ])
+  return newData
+}
+
 class EximbayClient {
   /**
    * @param {string} mid
@@ -11,54 +26,35 @@ class EximbayClient {
   }
 
   makeQueryString (data = {}) {
-    return go(
-      data,
-      data => Object.keys(data).sort(),
-      sortedKeys => sortedKeys.reduce((newData, key) => {
-        newData[ key ] = data[ key ]
-        return newData
-      }, {}),
-      simpleQueryString.stringify,
-    )
+    // encode 된 값으로 query string 을 만들면 실패한다...
+    return Object.keys(data).reduce((str, key, idx) => `${str}${idx === 0 ? '' : '&'}${key}=${data[ key ]}`, '')
   }
 
-  generateFgKey (data) {
+  generateFgKey (data = {}) {
     return pipe(
       this.makeQueryString,
       query => `${this.secret}?${query}`,
-      d => sha256.create().update(d).hex()
+      d => sha256.create().update(d).hex(),
     )(data)
   }
 
-  renderTo (data = {}) {
-    data = Object.assign(data, {
-      ver: 230,
-      txntype: 'PAYMENT',
-      charset: 'UTF-8',
-      mid: this.mid,
-      fgkey: this.generateFgKey(data)
-    })
-
-    // SAMPLE REQUIRED KEYS
-    const keys = [ 'statusurl', 'returnurl', 'ref', 'ostype', 'displaytype', 'paymethod', 'cur', 'amt', 'lang', 'buyer', 'email' ]
-    keys.forEach(key => data[ key ] = key)
-
-    const requestUrl = `${this.eximbayServerUrl}/Gateway/BasicProcessor.krp`
-
-    const tmpl = url => `
-    <div align="center" onload="javascript:document.regForm.submit()">
-      <form name="regForm" method="post" action="${url}">
-        <input type="submit">
-        ${Object.entries(data).map(([ key, value ]) => `<input type="hidden" name="${key}" value="${value}" >`).join('\n')}
-      </form>
-    </div>
-    `
-
-    pipe(
-      tmpl,
+  renderPayment (data = {}) {
+    return pipe(
+      data => Object.assign({}, data, {
+        ver: 230,
+        txntype: 'PAYMENT',
+        charset: 'UTF-8',
+        mid: this.mid,
+      }),
+      sortByKeys,
+      data => {
+        data.fgkey = this.generateFgKey(data)
+        return data
+      },
+      paymentTmpl(`${this.eximbayServerUrl}/Gateway/BasicProcessor.krp`),
       $.el,
       $.append($('.request'))
-    )(requestUrl)
+    )(data)
   }
 }
 

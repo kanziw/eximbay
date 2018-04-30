@@ -5,15 +5,38 @@
   <title>Exambay Payment Sample</title>
   <script src="js/functional.js"></script>
   <script src="js/$.js"></script>
-  <script src="https://cdn.rawgit.com/khalidsalomao/simple-query-string/22cc5bbe/src/simplequerystring.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
   <script src="./client.js"></script>
 </head>
 <body>
 <div class="request"></div>
 <script>
-  const eximbayClient = new EximbayClient('mid', 'secret', { env: 'test' })
-  eximbayClient.renderTo({})
+  const eximbayClient = new EximbayClient('1849705C64', '289F40E6640124B2628640168C3C5464', { env: 'test' })
+  const data = {
+    amt: '1.0',
+    buyer: 'Buyer',
+    cur: 'USD',
+    displaytype: 'R',
+    email: 'test@test.com',
+    item_0_product: 'Product Name',
+    item_0_quantity: '1',
+    item_0_unitPrice: '1',
+    lang: 'KR',
+    ostype: 'P',
+    paymethod: '',
+    ref: 'demo20170418202020',
+    returnurl: 'http://test.com',
+    shipTo_city: 'Mountain View',
+    shipTo_country: 'US',
+    shipTo_firstName: 'First Name',
+    shipTo_lastName: 'Last Name',
+    shipTo_phoneNumber: '1234',
+    shipTo_postalCode: '94043',
+    shipTo_state: 'CA',
+    shipTo_street1: '100 Elm Street',
+    statusurl: 'http://test.com',
+  }
+  eximbayClient.renderPayment(data)
 </script>
 </body>
 </html>
