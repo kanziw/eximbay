@@ -1,3 +1,5 @@
+import { sortByKeys, makeQueryString } from '../common'
+
 const paymentTmpl = curry2((url, data) => `
     <div align="center">
       <form method="post" action="${url}">
@@ -6,12 +8,6 @@ const paymentTmpl = curry2((url, data) => `
       </form>
     </div>
     `)
-
-const sortByKeys = data => {
-  const newData = {}
-  Object.keys(data).sort().forEach(key => newData[ key ] = data[ key ])
-  return newData
-}
 
 class EximbayClient {
   /**
@@ -25,14 +21,9 @@ class EximbayClient {
     this.eximbayServerUrl = `https://secureapi${env === 'prod' ? '' : '.test'}.eximbay.com`
   }
 
-  makeQueryString (data = {}) {
-    // encode 된 값으로 query string 을 만들면 실패한다...
-    return Object.keys(data).reduce((str, key, idx) => `${str}${idx === 0 ? '' : '&'}${key}=${data[ key ]}`, '')
-  }
-
   generateFgKey (data = {}) {
     return pipe(
-      this.makeQueryString,
+      makeQueryString,
       query => `${this.secret}?${query}`,
       d => sha256.create().update(d).hex(),
     )(data)
