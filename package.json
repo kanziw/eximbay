@@ -4,7 +4,9 @@
   "description": "eximbay module for Node.js",
   "main": "./dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:copy": "cp src/client/index.html dist/client/index.html",
+    "build": "babel src --out-dir dist && npm run build:copy",
+    "test": "mocha -R spec --require babel-register test/*.test.js"
   },
   "repository": {
     "type": "git",
@@ -22,5 +24,26 @@
   "bugs": {
     "url": "https://github.com/kanziw/eximbay/issues"
   },
-  "homepage": "https://github.com/kanziw/eximbay#readme"
+  "homepage": "https://github.com/kanziw/eximbay#readme",
+  "babel": {
+    "presets": [
+      "es2017"
+    ],
+    "plugins": [
+      "transform-es2015-modules-commonjs",
+      "transform-class-properties"
+    ]
+  },
+  "devDependencies": {
+    "babel-cli": "6.26.0",
+    "babel-plugin-transform-class-properties": "6.24.1",
+    "babel-plugin-transform-es2015-modules-commonjs": "6.26.2",
+    "babel-preset-es2017": "6.24.1",
+    "chai": "4.1.2"
+  },
+  "dependencies": {
+    "mocha": "5.1.1",
+    "partial-js": "1.1.4",
+    "request": "2.85.0"
+  }
 }
