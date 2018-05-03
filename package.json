@@ -1,6 +1,6 @@
 {
   "name": "eximbay",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "eximbay module for Node.js",
   "main": "./dist/index.js",
   "scripts": {
@@ -42,10 +42,10 @@
     "babel-plugin-transform-class-properties": "6.24.1",
     "babel-plugin-transform-es2015-modules-commonjs": "6.26.2",
     "babel-preset-es2017": "6.24.1",
-    "chai": "4.1.2"
+    "chai": "4.1.2",
+    "mocha": "5.1.1"
   },
   "dependencies": {
-    "mocha": "5.1.1",
     "partial-js": "1.1.5",
     "request": "2.85.0"
   }
