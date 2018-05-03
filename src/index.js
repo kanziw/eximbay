@@ -1,3 +1,7 @@
-const EximbayClient = require('./client')
+import Client from './client'
+import Server from './server'
 
-module.exports = { EximbayClient }
+export const EximbayClient = Client
+export const EximbayServer = Server
+
+module.exports = { EximbayClient, EximbayServer }

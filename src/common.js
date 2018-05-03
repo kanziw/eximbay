@@ -1,3 +1,5 @@
+const curry2 = f => (..._) => _.length < 2 ? (..._2) => f(..._, ..._2) : f(..._);
+
 const sortByKeys = data => {
   const newData = {}
   Object.keys(data).sort().forEach(key => newData[ key ] = data[ key ])
@@ -11,6 +13,7 @@ const makeQueryString = (data = {}) => Object.keys(data).reduce(addQueryString.b
 const common = {
   sortByKeys,
   makeQueryString,
+  curry2,
 }
 
 try {

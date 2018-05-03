@@ -1,6 +1,6 @@
-const commonModule = window || require('../common')
+const commonModule = importCommonModule()
 
-const paymentTmpl = curry2((url, data) => `
+const paymentTmpl = commonModule.curry2((url, data) => `
     <div align="center">
       <form method="post" action="${url}">
         <input type="submit">
@@ -15,7 +15,7 @@ class EximbayClient {
    * @param {string} secret
    * @param {string} [env=prod]
    */
-  constructor (mid, secret, { env = 'prod' }) {
+  constructor (mid, secret, { env = 'prod' } = {}) {
     this.mid = mid
     this.secret = secret
     this.eximbayServerUrl = `https://secureapi${env === 'prod' ? '' : '.test'}.eximbay.com`
@@ -49,8 +49,20 @@ class EximbayClient {
   }
 }
 
-if (window) {
-  window.EximbayClient = EximbayClient
-} else {
+function importCommonModule () {
+  try {
+    if (window) {
+      return window
+    }
+  } catch (ex) {
+  }
+  return require('../common')
+}
+
+try {
+  if (window) {
+    window.EximbayClient = EximbayClient
+  }
+} catch (ex) {
   module.exports = EximbayClient
 }
