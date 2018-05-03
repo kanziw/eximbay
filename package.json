@@ -1,6 +1,6 @@
 {
   "name": "eximbay",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "eximbay module for Node.js",
   "main": "./dist/index.js",
   "scripts": {
