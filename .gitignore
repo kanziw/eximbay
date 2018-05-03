@@ -61,4 +61,7 @@ typings/
 .idea/
 
 # Compiled files
-dist/
+server/
+client/
+common/
+index.js

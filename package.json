@@ -1,13 +1,13 @@
 {
   "name": "eximbay",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "eximbay module for Node.js",
-  "main": "./dist/index.js",
+  "main": "index.js",
   "scripts": {
-    "build:copy": "npm run build:pre && cp src/client/index.html dist/client/index.html",
-    "build:pre": "mkdir -p dist/client",
-    "build": "npm run build:pre && npm run build:copy && babel src --out-dir dist",
-    "clean": "rm -rf dist/",
+    "build:copy": "npm run build:pre && cp src/client/index.html client/index.html",
+    "build:pre": "mkdir -p client",
+    "build": "npm run build:pre && npm run build:copy && babel src --out-dir .",
+    "clean": "rm -rf index.js client/ server/ common/",
     "test": "mocha -R spec --require babel-register test/*.test.js",
     "watch": "npm run build:pre && npm run build:copy && babel --watch src --out-dir dist"
   },
