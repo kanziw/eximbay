@@ -1,4 +1,4 @@
-import { sortByKeys, makeQueryString } from '../common'
+const commonModule = window || require('../common')
 
 const paymentTmpl = curry2((url, data) => `
     <div align="center">
@@ -23,7 +23,7 @@ class EximbayClient {
 
   generateFgKey (data = {}) {
     return pipe(
-      makeQueryString,
+      commonModule.makeQueryString,
       query => `${this.secret}?${query}`,
       d => sha256.create().update(d).hex(),
     )(data)
@@ -37,7 +37,7 @@ class EximbayClient {
         charset: 'UTF-8',
         mid: this.mid,
       }),
-      sortByKeys,
+      commonModule.sortByKeys,
       data => {
         data.fgkey = this.generateFgKey(data)
         return data

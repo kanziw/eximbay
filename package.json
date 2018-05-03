@@ -5,7 +5,8 @@
   "main": "./dist/index.js",
   "scripts": {
     "build:copy": "cp src/client/index.html dist/client/index.html",
-    "build": "babel src --out-dir dist && npm run build:copy",
+    "build": "npm run build:copy && babel src --out-dir dist",
+    "watch": "npm run build:copy && babel --watch src --out-dir dist",
     "test": "mocha -R spec --require babel-register test/*.test.js"
   },
   "repository": {
@@ -43,7 +44,7 @@
   },
   "dependencies": {
     "mocha": "5.1.1",
-    "partial-js": "1.1.4",
+    "partial-js": "1.1.5",
     "request": "2.85.0"
   }
 }

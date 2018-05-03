@@ -19,7 +19,7 @@ export default class EximbayServer {
   /** @returns {Promise<PaymentValidationResponse>} */
   requestPaymentResult = _.pipe(
     _.pick([ 'ver', 'mid', 'ref', 'cur', 'amt', 'transid' ]),
-    _.partial(_.extend, _, { txntype: 'QUERY', keyfield: 'TRANSID', lang: 'KR', charset: 'UTF-8' }),
+    _.extend({ txntype: 'QUERY', keyfield: 'TRANSID', lang: 'KR', charset: 'UTF-8' }),
     data => {
       data.fgkey = this._generateFGKey(data)
       return data
@@ -28,7 +28,7 @@ export default class EximbayServer {
       { url: 'https://secureapi.test.eximbay.com/Gateway/DirectProcessor.krp', form },
       (err, _, body) => err ? reject(err) : resolve(body))),
     qs.parse,
-    _.mapObject((val) => typeof val === 'string' ? val.trim() : val),
+    _.mapObject((val) => _.isString(val) ? val.trim() : val),
   )
 }
 
