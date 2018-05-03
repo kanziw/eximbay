@@ -8,7 +8,6 @@
     "build:pre": "mkdir -p dist/client",
     "build": "npm run build:pre && npm run build:copy && babel src --out-dir dist",
     "clean": "rm -rf dist/",
-    "publish": "npm run clean && npm run build:copy && npm run build && npm publish",
     "test": "mocha -R spec --require babel-register test/*.test.js",
     "watch": "npm run build:pre && npm run build:copy && babel --watch src --out-dir dist"
   },
